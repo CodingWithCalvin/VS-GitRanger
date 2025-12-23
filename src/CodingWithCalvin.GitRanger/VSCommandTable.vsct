@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+  <Include href="KnownImageIds.vsct" />
+
+  <Commands package="guidGitRangerPackage">
+
+    <!-- Groups -->
+    <Groups>
+      <!-- Tools Menu Group -->
+      <Group guid="guidGitRangerPackageCmdSet" id="GitRangerToolsMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
+
+      <!-- Editor Context Menu Group -->
+      <Group guid="guidGitRangerPackageCmdSet" id="GitRangerEditorContextMenuGroup" priority="0x0100">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+      </Group>
+    </Groups>
+
+    <!-- Buttons/Commands -->
+    <Buttons>
+      <!-- Toggle Inline Blame -->
+      <Button guid="guidGitRangerPackageCmdSet" id="cmdidToggleInlineBlame" priority="0x0100" type="Button">
+        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerToolsMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="GitNoColor" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Git Ranger: Toggle Inline Blame</ButtonText>
+        </Strings>
+      </Button>
+
+      <!-- Toggle Blame Gutter -->
+      <Button guid="guidGitRangerPackageCmdSet" id="cmdidToggleBlameGutter" priority="0x0110" type="Button">
+        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerToolsMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="GitNoColor" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Git Ranger: Toggle Blame Gutter</ButtonText>
+        </Strings>
+      </Button>
+
+      <!-- Open Git Graph -->
+      <Button guid="guidGitRangerPackageCmdSet" id="cmdidOpenGitGraph" priority="0x0120" type="Button">
+        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerToolsMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="BranchRelationship" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Git Ranger: Open Git Graph</ButtonText>
+        </Strings>
+      </Button>
+
+      <!-- Show File History (Editor Context) -->
+      <Button guid="guidGitRangerPackageCmdSet" id="cmdidShowFileHistory" priority="0x0100" type="Button">
+        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerEditorContextMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="History" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Git Ranger: Show File History</ButtonText>
+        </Strings>
+      </Button>
+
+      <!-- Show Line History (Editor Context) -->
+      <Button guid="guidGitRangerPackageCmdSet" id="cmdidShowLineHistory" priority="0x0110" type="Button">
+        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerEditorContextMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="History" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Git Ranger: Show Line History</ButtonText>
+        </Strings>
+      </Button>
+
+      <!-- Compare with Previous (Editor Context) -->
+      <Button guid="guidGitRangerPackageCmdSet" id="cmdidCompareWithPrevious" priority="0x0120" type="Button">
+        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerEditorContextMenuGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Git Ranger: Compare with Previous</ButtonText>
+        </Strings>
+      </Button>
+
+      <!-- Copy Commit SHA (Editor Context) -->
+      <Button guid="guidGitRangerPackageCmdSet" id="cmdidCopyCommitSha" priority="0x0130" type="Button">
+        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerEditorContextMenuGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Git Ranger: Copy Commit SHA</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="guidGitRangerPackage" value="{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}" />
+
+    <GuidSymbol name="guidGitRangerPackageCmdSet" value="{B2C3D4E5-F6A7-8901-BCDE-F12345678902}">
+      <!-- Groups -->
+      <IDSymbol name="GitRangerToolsMenuGroup" value="0x1020" />
+      <IDSymbol name="GitRangerEditorContextMenuGroup" value="0x1021" />
+
+      <!-- Commands -->
+      <IDSymbol name="cmdidToggleInlineBlame" value="0x0100" />
+      <IDSymbol name="cmdidToggleBlameGutter" value="0x0101" />
+      <IDSymbol name="cmdidOpenGitGraph" value="0x0102" />
+      <IDSymbol name="cmdidShowFileHistory" value="0x0103" />
+      <IDSymbol name="cmdidShowLineHistory" value="0x0104" />
+      <IDSymbol name="cmdidCompareWithPrevious" value="0x0105" />
+      <IDSymbol name="cmdidCopyCommitSha" value="0x0106" />
+    </GuidSymbol>
+  </Symbols>
+
+</CommandTable>
