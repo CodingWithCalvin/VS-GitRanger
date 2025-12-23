@@ -1,6 +1,6 @@
 namespace CodingWithCalvin.GitRanger
 {
-    internal sealed partial class Vsix
+    internal static class Vsix
     {
         public const string Id = "CodingWithCalvin.VS-GitRanger";
         public const string Name = "Git Ranger";

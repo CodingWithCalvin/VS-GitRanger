@@ -137,17 +137,6 @@ namespace CodingWithCalvin.GitRanger
     }
 
     /// <summary>
-    /// VSIX metadata constants.
-    /// </summary>
-    public static class Vsix
-    {
-        public const string Name = "Git Ranger";
-        public const string Description = "A visually exciting Git management extension for Visual Studio";
-        public const string Version = "1.0.0";
-        public const string Author = "Calvin A. Allen";
-    }
-
-    /// <summary>
     /// Package GUIDs.
     /// </summary>
     public static class PackageGuids
