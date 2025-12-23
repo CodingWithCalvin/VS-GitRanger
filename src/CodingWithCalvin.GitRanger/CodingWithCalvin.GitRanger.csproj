@@ -25,6 +25,7 @@
     <UseCodebase>true</UseCodebase>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <DeployExtension Condition="'$(DeployExtension)' == ''">true</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GitRangerPackage.cs" />
+    <Compile Include="source.extension.cs" />
     <Compile Include="Commands\BlameCommands.cs" />
     <Compile Include="Commands\HistoryCommands.cs" />
     <Compile Include="Commands\GraphCommands.cs" />
