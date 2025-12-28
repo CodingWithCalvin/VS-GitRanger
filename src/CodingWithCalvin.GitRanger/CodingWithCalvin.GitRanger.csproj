@@ -87,16 +87,13 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <!-- Icons will be added later - uncomment when available -->
-    <!-- <Content Include="Resources\Icons\GitRangerIcon.png">
+    <Content Include="..\..\resources\icon.png">
+      <Link>Resources\icon.png</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Icons\GitRangerPreview.png">
-      <IncludeInVSIX>true</IncludeInVSIX>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content> -->
-    <Content Include="LICENSE">
+    <Content Include="..\..\LICENSE">
+      <Link>Resources\LICENSE</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
