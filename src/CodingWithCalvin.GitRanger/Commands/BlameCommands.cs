@@ -49,8 +49,8 @@ namespace CodingWithCalvin.GitRanger.Commands
                 var options = GeneralOptions.Instance;
                 var isEnabled = options?.EnableInlineBlame ?? true;
                 command.Text = isEnabled
-                    ? "Git Ranger: Disable Inline Blame"
-                    : "Git Ranger: Enable Inline Blame";
+                    ? "Disable Inline Blame"
+                    : "Enable Inline Blame";
                 command.Enabled = true;
                 command.Visible = true;
             }
@@ -80,8 +80,8 @@ namespace CodingWithCalvin.GitRanger.Commands
                 var options = GeneralOptions.Instance;
                 var isEnabled = options?.EnableBlameGutter ?? true;
                 command.Text = isEnabled
-                    ? "Git Ranger: Disable Blame Gutter"
-                    : "Git Ranger: Enable Blame Gutter";
+                    ? "Disable Blame Gutter"
+                    : "Enable Blame Gutter";
                 command.Enabled = true;
                 command.Visible = true;
             }

@@ -7,11 +7,22 @@
 
   <Commands package="guidGitRangerPackage">
 
+    <!-- Menus -->
+    <Menus>
+      <!-- Git Ranger submenu under Extensions -->
+      <Menu guid="guidGitRangerPackageCmdSet" id="GitRangerMenu" priority="0x0100" type="Menu">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_EXTENSIONS" />
+        <Strings>
+          <ButtonText>Git Ranger</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
     <!-- Groups -->
     <Groups>
-      <!-- Tools Menu Group -->
-      <Group guid="guidGitRangerPackageCmdSet" id="GitRangerToolsMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      <!-- Git Ranger Menu Group (inside the submenu) -->
+      <Group guid="guidGitRangerPackageCmdSet" id="GitRangerMenuGroup" priority="0x0600">
+        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerMenu" />
       </Group>
 
       <!-- Editor Context Menu Group -->
@@ -24,23 +35,23 @@
     <Buttons>
       <!-- Toggle Inline Blame -->
       <Button guid="guidGitRangerPackageCmdSet" id="cmdidToggleInlineBlame" priority="0x0100" type="Button">
-        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerToolsMenuGroup" />
+        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerMenuGroup" />
         <Icon guid="ImageCatalogGuid" id="GitNoColor" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
-          <ButtonText>Git Ranger: Toggle Inline Blame</ButtonText>
+          <ButtonText>Toggle Inline Blame</ButtonText>
         </Strings>
       </Button>
 
       <!-- Toggle Blame Gutter -->
       <Button guid="guidGitRangerPackageCmdSet" id="cmdidToggleBlameGutter" priority="0x0110" type="Button">
-        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerToolsMenuGroup" />
+        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerMenuGroup" />
         <Icon guid="ImageCatalogGuid" id="GitNoColor" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
-          <ButtonText>Git Ranger: Toggle Blame Gutter</ButtonText>
+          <ButtonText>Toggle Blame Gutter</ButtonText>
         </Strings>
       </Button>
 
@@ -60,8 +71,11 @@
     <GuidSymbol name="guidGitRangerPackage" value="{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}" />
 
     <GuidSymbol name="guidGitRangerPackageCmdSet" value="{B2C3D4E5-F6A7-8901-BCDE-F12345678902}">
+      <!-- Menus -->
+      <IDSymbol name="GitRangerMenu" value="0x1010" />
+
       <!-- Groups -->
-      <IDSymbol name="GitRangerToolsMenuGroup" value="0x1020" />
+      <IDSymbol name="GitRangerMenuGroup" value="0x1020" />
       <IDSymbol name="GitRangerEditorContextMenuGroup" value="0x1021" />
 
       <!-- Commands -->
