@@ -54,8 +54,9 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
             {
                 AllowsTransparency = true,
                 Placement = PlacementMode.Mouse,
-                StaysOpen = false,
-                PopupAnimation = PopupAnimation.Fade
+                StaysOpen = true,
+                IsHitTestVisible = false,
+                PopupAnimation = PopupAnimation.None
             };
 
             // Ensure services are initialized (in case package hasn't loaded yet)
