@@ -2,13 +2,15 @@
   <img src="resources/icon.png" alt="Git Ranger Logo" width="128" />
 </p>
 
-# 🤠 Git Ranger
+<h1 align="center">🤠 Git Ranger</h1>
 
-> *Taming your Git history, one line at a time!* 🐎
+<p align="center"><i>Taming your Git history, one line at a time!</i> 🐎</p>
 
-[![Visual Studio 2022](https://img.shields.io/badge/Visual%20Studio-2022%20%7C%202026-purple?style=for-the-badge&logo=visualstudio&logoColor=white)](https://visualstudio.microsoft.com/)
-[![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8-blue?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+<p align="center">
+  <a href="https://visualstudio.microsoft.com/"><img src="https://img.shields.io/badge/Visual%20Studio-2022%20%7C%202026-purple?style=for-the-badge&logo=visualstudio&logoColor=white" alt="Visual Studio 2022"></a>
+  <a href="https://dotnet.microsoft.com/"><img src="https://img.shields.io/badge/.NET%20Framework-4.8-blue?style=for-the-badge&logo=dotnet" alt=".NET Framework"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License: MIT"></a>
+</p>
 
 ---
 
