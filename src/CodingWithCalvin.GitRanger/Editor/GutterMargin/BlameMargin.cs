@@ -75,8 +75,8 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
             // Subscribe to options changes
             GeneralOptions.Saved += OnOptionsSaved;
 
-            // Handle mouse events
-            MouseLeftButtonUp += OnMouseLeftButtonUp;
+            // Handle mouse events (use Preview to ensure we get clicks even with popup open)
+            PreviewMouseLeftButtonUp += OnMouseLeftButtonUp;
             MouseMove += OnMouseMove;
             MouseLeave += OnMouseLeave;
 
