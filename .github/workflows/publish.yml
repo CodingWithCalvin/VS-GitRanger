@@ -76,7 +76,7 @@ jobs:
       post_text: |
         🚀 Git Ranger v${{ needs.publish.outputs.version }} for #VisualStudio has been released!
 
-        Check out the release notes and download it from the Visual Studio Marketplace!
+        Check out the release notes: https://github.com/${{ github.repository }}/releases/tag/${{ needs.publish.outputs.version }}
 
         #dotnet #csharp #visualstudio
       article_url: https://marketplace.visualstudio.com/items?itemName=CodingWithCalvin.VS-GitRanger
