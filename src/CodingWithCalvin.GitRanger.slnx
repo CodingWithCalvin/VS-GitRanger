@@ -11,8 +11,8 @@
     <File Path="../resources/extension.manifest.json" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="CodingWithCalvin.GitRanger/CodingWithCalvin.GitRanger.csproj" />
     <Project Path="CodingWithCalvin.GitRanger.Core/CodingWithCalvin.GitRanger.Core.csproj" />
+    <Project Path="CodingWithCalvin.GitRanger/CodingWithCalvin.GitRanger.csproj" Id="a1b2c3d4-e5f6-7890-abcd-ef1234567890" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="../tests/CodingWithCalvin.GitRanger.Core.Tests/CodingWithCalvin.GitRanger.Core.Tests.csproj" />
