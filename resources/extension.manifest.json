@@ -8,12 +8,6 @@
   "identity": {
     "internalName": "VS-GitRanger"
   },
-  "assetFiles": [
-    {
-      "pathOnDisk": "icon.png",
-      "targetPath": "resources/icon.png"
-    }
-  ],
   "overview": "../README.md",
   "publisher": "CodingWithCalvin",
   "qna": true,

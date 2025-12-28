@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="resources/icon.png" alt="Git Ranger Logo" width="128" />
+  <img src="https://raw.githubusercontent.com/CodingWithCalvin/VS-GitRanger/main/resources/icon.png" alt="Git Ranger Logo" width="128" />
 </p>
 
 <h1 align="center">Git Ranger</h1>
