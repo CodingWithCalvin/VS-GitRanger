@@ -33,6 +33,7 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
         private string? _currentFilePath;
         private bool _isLoading;
         private bool _isDisposed;
+        private int _currentTooltipLine = -1;
 
         /// <summary>
         /// Creates a new blame margin for the given text view.
@@ -337,19 +338,30 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
             if (blameInfo != null)
             {
                 Cursor = Cursors.Hand;
-                _tooltipPopup.Child = CreateTooltip(blameInfo);
-                _tooltipPopup.IsOpen = true;
+
+                // Only update popup if line changed
+                if (_currentTooltipLine != blameInfo.LineNumber)
+                {
+                    _currentTooltipLine = blameInfo.LineNumber;
+                    _tooltipPopup.Child = CreateTooltip(blameInfo);
+                    _tooltipPopup.IsOpen = true;
+                }
             }
             else
             {
                 Cursor = Cursors.Arrow;
-                _tooltipPopup.IsOpen = false;
+                if (_currentTooltipLine != -1)
+                {
+                    _currentTooltipLine = -1;
+                    _tooltipPopup.IsOpen = false;
+                }
             }
         }
 
         private void OnMouseLeave(object sender, MouseEventArgs e)
         {
             Cursor = Cursors.Arrow;
+            _currentTooltipLine = -1;
             _tooltipPopup.IsOpen = false;
         }
 
