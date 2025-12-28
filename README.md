@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/CodingWithCalvin.GitRanger/Resources/Icons/icon.png" alt="Git Ranger Logo" width="128" />
+  <img src="resources/icon.png" alt="Git Ranger Logo" width="128" />
 </p>
 
 # 🤠 Git Ranger

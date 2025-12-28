@@ -8,9 +8,8 @@
         <License>LICENSE</License>
         <GettingStartedGuide>https://github.com/calvinallen/GitRanger#readme</GettingStartedGuide>
         <ReleaseNotes>https://github.com/calvinallen/GitRanger/releases</ReleaseNotes>
-        <!-- Icons to be added later -->
-        <!-- <Icon>Resources\Icons\GitRangerIcon.png</Icon>
-    <PreviewImage>Resources\Icons\GitRangerPreview.png</PreviewImage> -->
+        <Icon>..\..\resources\icon.png</Icon>
+        <PreviewImage>..\..\resources\icon.png</PreviewImage>
         <Tags>git, blame, history, graph, version control, source control, gitlens</Tags>
     </Metadata>
     <Installation>
