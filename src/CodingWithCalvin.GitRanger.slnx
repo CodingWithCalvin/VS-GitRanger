@@ -1,0 +1,20 @@
+<Solution>
+  <Configurations>
+    <Configuration Name="Debug" />
+    <Configuration Name="Release" />
+    <Platform Name="AnyCPU" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path="../.github/workflows/publish.yml" />
+    <File Path="../.github/workflows/release_build_and_deploy.yml" />
+    <File Path="../README.md" />
+    <File Path="../resources/extension.manifest.json" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="CodingWithCalvin.GitRanger/CodingWithCalvin.GitRanger.csproj" />
+    <Project Path="CodingWithCalvin.GitRanger.Core/CodingWithCalvin.GitRanger.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="../tests/CodingWithCalvin.GitRanger.Core.Tests/CodingWithCalvin.GitRanger.Core.Tests.csproj" />
+  </Folder>
+</Solution>

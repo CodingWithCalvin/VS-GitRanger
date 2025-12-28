@@ -27,7 +27,7 @@ jobs:
         extension-source-file: 'src/CodingWithCalvin.GitRanger/source.extension.cs'
 
     - name: 2. Restoring Packages
-      run: nuget restore CodingWithCalvin.GitRanger.sln
+      run: nuget restore src/CodingWithCalvin.GitRanger.slnx
 
     - name: 3. Building Project
       run: msbuild 'src/CodingWithCalvin.GitRanger/CodingWithCalvin.GitRanger.csproj' /p:configuration='Release' /p:DeployExtension=False
