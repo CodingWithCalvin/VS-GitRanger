@@ -11,7 +11,7 @@
     <Menus>
       <!-- Git Ranger submenu under Extensions -->
       <Menu guid="guidGitRangerPackageCmdSet" id="GitRangerMenu" priority="0x0100" type="Menu">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_EXTENSIONS" />
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_TOOLSADDINS" />
         <Strings>
           <ButtonText>Git Ranger</ButtonText>
         </Strings>
