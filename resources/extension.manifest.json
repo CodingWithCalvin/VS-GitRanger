@@ -16,6 +16,6 @@
   ],
   "overview": "../README.md",
   "publisher": "CodingWithCalvin",
-  "qna": false,
+  "qna": true,
   "repo": "https://www.github.com/CodingWithCalvin/VS-GitRanger"
 }
