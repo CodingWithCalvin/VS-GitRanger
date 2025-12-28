@@ -10,7 +10,7 @@
   },
   "assetFiles": [
     {
-      "pathOnDisk": "resources/icon.png",
+      "pathOnDisk": "icon.png",
       "targetPath": "resources/icon.png"
     }
   ],
