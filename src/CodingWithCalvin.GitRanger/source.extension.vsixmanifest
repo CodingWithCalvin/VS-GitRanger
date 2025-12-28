@@ -10,7 +10,7 @@
         <ReleaseNotes>https://github.com/calvinallen/GitRanger/releases</ReleaseNotes>
         <Icon>Resources\icon.png</Icon>
         <PreviewImage>Resources\icon.png</PreviewImage>
-        <Tags>git, blame, history, graph, version control, source control, gitlens</Tags>
+        <Tags>git, blame, history, graph, version control</Tags>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 19.0)">
