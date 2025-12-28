@@ -61,7 +61,7 @@ jobs:
 
         Check out the release notes and download it from the Visual Studio Marketplace!
 
-        #dotnet #csharp
+        #dotnet #csharp #visualstudio
       embed_url: https://marketplace.visualstudio.com/items?itemName=CodingWithCalvin.VS-GitRanger
       embed_title: Git Ranger for Visual Studio
       embed_description: A visually stunning Git management extension for Visual Studio 2022/2026
@@ -77,6 +77,8 @@ jobs:
         🚀 Git Ranger v${{ needs.publish.outputs.version }} for #VisualStudio has been released!
 
         Check out the release notes and download it from the Visual Studio Marketplace!
+
+        #dotnet #csharp #visualstudio
       article_url: https://marketplace.visualstudio.com/items?itemName=CodingWithCalvin.VS-GitRanger
       article_title: Git Ranger for Visual Studio
       article_description: A visually stunning Git management extension for Visual Studio 2022/2026
