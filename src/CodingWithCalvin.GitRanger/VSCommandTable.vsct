@@ -44,48 +44,6 @@
         </Strings>
       </Button>
 
-      <!-- Open Git Graph -->
-      <Button guid="guidGitRangerPackageCmdSet" id="cmdidOpenGitGraph" priority="0x0120" type="Button">
-        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerToolsMenuGroup" />
-        <Icon guid="ImageCatalogGuid" id="BranchRelationship" />
-        <CommandFlag>IconIsMoniker</CommandFlag>
-        <CommandFlag>DynamicVisibility</CommandFlag>
-        <Strings>
-          <ButtonText>Git Ranger: Open Git Graph</ButtonText>
-        </Strings>
-      </Button>
-
-      <!-- Show File History (Editor Context) -->
-      <Button guid="guidGitRangerPackageCmdSet" id="cmdidShowFileHistory" priority="0x0100" type="Button">
-        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerEditorContextMenuGroup" />
-        <Icon guid="ImageCatalogGuid" id="History" />
-        <CommandFlag>IconIsMoniker</CommandFlag>
-        <CommandFlag>DynamicVisibility</CommandFlag>
-        <Strings>
-          <ButtonText>Git Ranger: Show File History</ButtonText>
-        </Strings>
-      </Button>
-
-      <!-- Show Line History (Editor Context) -->
-      <Button guid="guidGitRangerPackageCmdSet" id="cmdidShowLineHistory" priority="0x0110" type="Button">
-        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerEditorContextMenuGroup" />
-        <Icon guid="ImageCatalogGuid" id="History" />
-        <CommandFlag>IconIsMoniker</CommandFlag>
-        <CommandFlag>DynamicVisibility</CommandFlag>
-        <Strings>
-          <ButtonText>Git Ranger: Show Line History</ButtonText>
-        </Strings>
-      </Button>
-
-      <!-- Compare with Previous (Editor Context) -->
-      <Button guid="guidGitRangerPackageCmdSet" id="cmdidCompareWithPrevious" priority="0x0120" type="Button">
-        <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerEditorContextMenuGroup" />
-        <CommandFlag>DynamicVisibility</CommandFlag>
-        <Strings>
-          <ButtonText>Git Ranger: Compare with Previous</ButtonText>
-        </Strings>
-      </Button>
-
       <!-- Copy Commit SHA (Editor Context) -->
       <Button guid="guidGitRangerPackageCmdSet" id="cmdidCopyCommitSha" priority="0x0130" type="Button">
         <Parent guid="guidGitRangerPackageCmdSet" id="GitRangerEditorContextMenuGroup" />
@@ -109,10 +67,6 @@
       <!-- Commands -->
       <IDSymbol name="cmdidToggleInlineBlame" value="0x0100" />
       <IDSymbol name="cmdidToggleBlameGutter" value="0x0101" />
-      <IDSymbol name="cmdidOpenGitGraph" value="0x0102" />
-      <IDSymbol name="cmdidShowFileHistory" value="0x0103" />
-      <IDSymbol name="cmdidShowLineHistory" value="0x0104" />
-      <IDSymbol name="cmdidCompareWithPrevious" value="0x0105" />
       <IDSymbol name="cmdidCopyCommitSha" value="0x0106" />
     </GuidSymbol>
   </Symbols>

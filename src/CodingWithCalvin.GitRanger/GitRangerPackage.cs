@@ -129,10 +129,9 @@ namespace CodingWithCalvin.GitRanger
 
         private async Task RegisterCommandsAsync()
         {
-            // Register all commands
+            // Register blame commands (toggle inline/gutter, copy SHA)
             await BlameCommands.InitializeAsync(this);
-            await HistoryCommands.InitializeAsync(this);
-            await GraphCommands.InitializeAsync(this);
+            // Note: HistoryCommands and GraphCommands are not registered yet (coming soon)
         }
     }
 
@@ -155,10 +154,6 @@ namespace CodingWithCalvin.GitRanger
     {
         public const int cmdidToggleInlineBlame = 0x0100;
         public const int cmdidToggleBlameGutter = 0x0101;
-        public const int cmdidOpenGitGraph = 0x0102;
-        public const int cmdidShowFileHistory = 0x0103;
-        public const int cmdidShowLineHistory = 0x0104;
-        public const int cmdidCompareWithPrevious = 0x0105;
         public const int cmdidCopyCommitSha = 0x0106;
     }
 }
