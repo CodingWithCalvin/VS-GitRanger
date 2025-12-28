@@ -102,25 +102,6 @@ namespace CodingWithCalvin.GitRanger.Options
         [Description("Show age indicator bars in the gutter.")]
         [DefaultValue(true)]
         public bool ShowAgeBars { get; set; } = true;
-
-        // Git Graph Settings
-        [Category("Git Graph")]
-        [DisplayName("Max Commits to Load")]
-        [Description("Maximum number of commits to load in the Git Graph view.")]
-        [DefaultValue(1000)]
-        public int MaxGraphCommits { get; set; } = 1000;
-
-        [Category("Git Graph")]
-        [DisplayName("Show Remote Branches")]
-        [Description("Show remote tracking branches in the Git Graph.")]
-        [DefaultValue(true)]
-        public bool ShowRemoteBranches { get; set; } = true;
-
-        [Category("Git Graph")]
-        [DisplayName("Show Tags")]
-        [Description("Show tags in the Git Graph.")]
-        [DefaultValue(true)]
-        public bool ShowTags { get; set; } = true;
     }
 
     /// <summary>

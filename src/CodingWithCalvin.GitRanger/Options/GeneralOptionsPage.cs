@@ -145,33 +145,6 @@ namespace CodingWithCalvin.GitRanger.Options
             set => _options.ShowAgeBars = value;
         }
 
-        // Git Graph Settings
-        [Category("Git Graph")]
-        [DisplayName("Max Commits to Load")]
-        [Description("Maximum number of commits to load in the Git Graph.")]
-        public int MaxGraphCommits
-        {
-            get => _options.MaxGraphCommits;
-            set => _options.MaxGraphCommits = Math.Max(100, Math.Min(10000, value));
-        }
-
-        [Category("Git Graph")]
-        [DisplayName("Show Remote Branches")]
-        [Description("Show remote tracking branches in the Git Graph.")]
-        public bool ShowRemoteBranches
-        {
-            get => _options.ShowRemoteBranches;
-            set => _options.ShowRemoteBranches = value;
-        }
-
-        [Category("Git Graph")]
-        [DisplayName("Show Tags")]
-        [Description("Show tags in the Git Graph.")]
-        public bool ShowTags
-        {
-            get => _options.ShowTags;
-            set => _options.ShowTags = value;
-        }
 
         /// <summary>
         /// Saves the settings.

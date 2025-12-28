@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using CodingWithCalvin.GitRanger.Core.Models;
@@ -27,10 +28,12 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
 
         private readonly IWpfTextView _view;
         private readonly ITextDocumentFactoryService? _textDocumentFactoryService;
+        private readonly Popup _tooltipPopup;
         private IReadOnlyList<BlameLineInfo> _blameData = Array.Empty<BlameLineInfo>();
         private string? _currentFilePath;
         private bool _isLoading;
         private bool _isDisposed;
+        private int _currentTooltipLine = -1;
 
         /// <summary>
         /// Creates a new blame margin for the given text view.
@@ -44,6 +47,17 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
             var options = GeneralOptions.Instance;
             Width = options?.GutterWidth ?? 40;
             ClipToBounds = true;
+            Background = Brushes.Transparent; // Required for mouse events to work
+
+            // Create custom tooltip popup (WPF ToolTip doesn't update well dynamically)
+            _tooltipPopup = new Popup
+            {
+                AllowsTransparency = true,
+                Placement = PlacementMode.Mouse,
+                StaysOpen = true,
+                IsHitTestVisible = false,
+                PopupAnimation = PopupAnimation.None
+            };
 
             // Ensure services are initialized (in case package hasn't loaded yet)
             GitRangerPackage.EnsureServicesInitialized();
@@ -61,8 +75,8 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
             // Subscribe to options changes
             GeneralOptions.Saved += OnOptionsSaved;
 
-            // Handle mouse events
-            MouseLeftButtonUp += OnMouseLeftButtonUp;
+            // Handle mouse events (use Preview to ensure we get clicks even with popup open)
+            PreviewMouseLeftButtonDown += OnMouseLeftButtonDown;
             MouseMove += OnMouseMove;
             MouseLeave += OnMouseLeave;
 
@@ -96,6 +110,8 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
                 return;
 
             _isDisposed = true;
+
+            _tooltipPopup.IsOpen = false;
 
             _view.LayoutChanged -= OnLayoutChanged;
             _view.Closed -= OnViewClosed;
@@ -299,19 +315,22 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
             }
         }
 
-        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var position = e.GetPosition(this);
-            var blameInfo = GetBlameInfoAtPosition(position);
-            if (blameInfo != null)
+            // Use the current tooltip line since we already know it has blame data
+            if (_currentTooltipLine > 0)
             {
-                // Show commit details
-                System.Windows.Clipboard.SetText(blameInfo.CommitSha);
-                ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+                var blameInfo = _blameData.FirstOrDefault(b => b.LineNumber == _currentTooltipLine);
+                if (blameInfo != null)
                 {
-                    await Community.VisualStudio.Toolkit.VS.StatusBar.ShowMessageAsync(
-                        $"Git Ranger: Copied commit SHA {blameInfo.ShortSha} to clipboard");
-                });
+                    System.Windows.Clipboard.SetText(blameInfo.CommitSha);
+                    ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+                    {
+                        await Community.VisualStudio.Toolkit.VS.StatusBar.ShowMessageAsync(
+                            $"Git Ranger: Copied commit SHA {blameInfo.ShortSha} to clipboard");
+                    });
+                    e.Handled = true;
+                }
             }
         }
 
@@ -323,19 +342,31 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
             if (blameInfo != null)
             {
                 Cursor = Cursors.Hand;
-                ToolTip = CreateTooltip(blameInfo);
+
+                // Only update popup if line changed
+                if (_currentTooltipLine != blameInfo.LineNumber)
+                {
+                    _currentTooltipLine = blameInfo.LineNumber;
+                    _tooltipPopup.Child = CreateTooltip(blameInfo);
+                    _tooltipPopup.IsOpen = true;
+                }
             }
             else
             {
                 Cursor = Cursors.Arrow;
-                ToolTip = null;
+                if (_currentTooltipLine != -1)
+                {
+                    _currentTooltipLine = -1;
+                    _tooltipPopup.IsOpen = false;
+                }
             }
         }
 
         private void OnMouseLeave(object sender, MouseEventArgs e)
         {
             Cursor = Cursors.Arrow;
-            ToolTip = null;
+            _currentTooltipLine = -1;
+            _tooltipPopup.IsOpen = false;
         }
 
         private BlameLineInfo? GetBlameInfoAtPosition(Point position)
@@ -358,29 +389,29 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
             return null;
         }
 
-        private static object CreateTooltip(BlameLineInfo blameInfo)
+        private static UIElement CreateTooltip(BlameLineInfo blameInfo)
         {
-            var tooltip = new StackPanel { Margin = new Thickness(4) };
+            var content = new StackPanel { Margin = new Thickness(8) };
 
-            tooltip.Children.Add(new TextBlock
+            content.Children.Add(new TextBlock
             {
                 Text = $"Commit: {blameInfo.ShortSha}",
                 FontWeight = FontWeights.Bold
             });
 
-            tooltip.Children.Add(new TextBlock
+            content.Children.Add(new TextBlock
             {
                 Text = $"Author: {blameInfo.Author}",
                 Margin = new Thickness(0, 4, 0, 0)
             });
 
-            tooltip.Children.Add(new TextBlock
+            content.Children.Add(new TextBlock
             {
                 Text = $"Date: {blameInfo.RelativeTime}",
                 Margin = new Thickness(0, 2, 0, 0)
             });
 
-            tooltip.Children.Add(new TextBlock
+            content.Children.Add(new TextBlock
             {
                 Text = blameInfo.CommitMessage,
                 TextWrapping = TextWrapping.Wrap,
@@ -388,7 +419,7 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
                 Margin = new Thickness(0, 8, 0, 0)
             });
 
-            tooltip.Children.Add(new TextBlock
+            content.Children.Add(new TextBlock
             {
                 Text = "Click to copy commit SHA",
                 FontStyle = FontStyles.Italic,
@@ -396,7 +427,26 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
                 Margin = new Thickness(0, 8, 0, 0)
             });
 
-            return tooltip;
+            // Wrap in a border for tooltip appearance
+            var border = new Border
+            {
+                Background = new SolidColorBrush(Color.FromRgb(45, 45, 48)),
+                BorderBrush = new SolidColorBrush(Color.FromRgb(63, 63, 70)),
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(3),
+                Child = content
+            };
+
+            // Set text color for dark background
+            foreach (var child in content.Children)
+            {
+                if (child is TextBlock textBlock && textBlock.Foreground != Brushes.Gray)
+                {
+                    textBlock.Foreground = Brushes.White;
+                }
+            }
+
+            return border;
         }
     }
 }

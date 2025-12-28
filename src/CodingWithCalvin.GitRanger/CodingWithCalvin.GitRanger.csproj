@@ -59,8 +59,6 @@
     <Compile Include="GitRangerPackage.cs" />
     <Compile Include="source.extension.cs" />
     <Compile Include="Commands\BlameCommands.cs" />
-    <Compile Include="Commands\HistoryCommands.cs" />
-    <Compile Include="Commands\GraphCommands.cs" />
     <Compile Include="Services\GitService.cs" />
     <Compile Include="Services\ThemeService.cs" />
     <Compile Include="Services\BlameService.cs" />
