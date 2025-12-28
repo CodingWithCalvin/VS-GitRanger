@@ -59,9 +59,12 @@ jobs:
       post_text: |
         🚀 Git Ranger v${{ needs.publish.outputs.version }} for #VisualStudio has been released!
 
-        [Check out the release notes here!](https://github.com/${{ github.repository }}/releases/tag/${{ needs.publish.outputs.version }})
+        Check out the release notes and download it from the Visual Studio Marketplace!
 
-        Marketplace: https://marketplace.visualstudio.com/items?itemName=CodingWithCalvin.VS-GitRanger
+        #dotnet #csharp
+      embed_url: https://marketplace.visualstudio.com/items?itemName=CodingWithCalvin.VS-GitRanger
+      embed_title: Git Ranger for Visual Studio
+      embed_description: A visually stunning Git management extension for Visual Studio 2022/2026
     secrets:
       BLUESKY_USERNAME: ${{ secrets.BLUESKY_USERNAME }}
       BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
