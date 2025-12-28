@@ -82,7 +82,7 @@ Git Ranger is a Visual Studio 2022/2026 extension for Git management, bringing G
 
 ```bash
 # Restore NuGet packages
-nuget restore CodingWithCalvin.GitRanger.sln
+nuget restore src/CodingWithCalvin.GitRanger.slnx
 
 # Build (Release)
 msbuild src/CodingWithCalvin.GitRanger/CodingWithCalvin.GitRanger.csproj /p:configuration=Release /p:DeployExtension=False
