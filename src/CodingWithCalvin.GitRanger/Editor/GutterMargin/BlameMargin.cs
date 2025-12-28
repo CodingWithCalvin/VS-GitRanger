@@ -76,7 +76,7 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
             GeneralOptions.Saved += OnOptionsSaved;
 
             // Handle mouse events (use Preview to ensure we get clicks even with popup open)
-            PreviewMouseLeftButtonUp += OnMouseLeftButtonUp;
+            PreviewMouseLeftButtonDown += OnMouseLeftButtonDown;
             MouseMove += OnMouseMove;
             MouseLeave += OnMouseLeave;
 
@@ -315,7 +315,7 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
             }
         }
 
-        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             // Use the current tooltip line since we already know it has blame data
             if (_currentTooltipLine > 0)
@@ -329,6 +329,7 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
                         await Community.VisualStudio.Toolkit.VS.StatusBar.ShowMessageAsync(
                             $"Git Ranger: Copied commit SHA {blameInfo.ShortSha} to clipboard");
                     });
+                    e.Handled = true;
                 }
             }
         }
