@@ -317,17 +317,19 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
 
         private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var position = e.GetPosition(this);
-            var blameInfo = GetBlameInfoAtPosition(position);
-            if (blameInfo != null)
+            // Use the current tooltip line since we already know it has blame data
+            if (_currentTooltipLine > 0)
             {
-                // Show commit details
-                System.Windows.Clipboard.SetText(blameInfo.CommitSha);
-                ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+                var blameInfo = _blameData.FirstOrDefault(b => b.LineNumber == _currentTooltipLine);
+                if (blameInfo != null)
                 {
-                    await Community.VisualStudio.Toolkit.VS.StatusBar.ShowMessageAsync(
-                        $"Git Ranger: Copied commit SHA {blameInfo.ShortSha} to clipboard");
-                });
+                    System.Windows.Clipboard.SetText(blameInfo.CommitSha);
+                    ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+                    {
+                        await Community.VisualStudio.Toolkit.VS.StatusBar.ShowMessageAsync(
+                            $"Git Ranger: Copied commit SHA {blameInfo.ShortSha} to clipboard");
+                    });
+                }
             }
         }
 
