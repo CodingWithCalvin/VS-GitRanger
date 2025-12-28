@@ -6,13 +6,13 @@
 
 > *Taming your Git history, one line at a time!* 🐎
 
-[![Visual Studio 2022](https://img.shields.io/badge/Visual%20Studio-2022%20%7C%202026-purple?logo=visualstudio&logoColor=white)](https://visualstudio.microsoft.com/)
-[![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8-blue?logo=dotnet)](https://dotnet.microsoft.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Visual Studio 2022](https://img.shields.io/badge/Visual%20Studio-2022%20%7C%202026-purple?style=for-the-badge&logo=visualstudio&logoColor=white)](https://visualstudio.microsoft.com/)
+[![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8-blue?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 ---
 
-A **visually stunning** Git management extension for Visual Studio 2022/2026, bringing GitLens-style functionality with theme-adaptive vibrant colors. 🎨✨
+A **visually stunning** Git management extension for Visual Studio 2022/2026, with theme-adaptive vibrant colors. 🎨✨
 
 ---
 
@@ -46,7 +46,7 @@ Check out our [issues list](https://github.com/CodingWithCalvin/VS-GitRanger/iss
 
 ### From Visual Studio Marketplace
 
-🚧 *Coming soon!* 🚧
+[![VS Marketplace](https://img.shields.io/badge/VS%20Marketplace-Git%20Ranger-purple?style=for-the-badge&logo=visualstudio&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=CodingWithCalvin.VS-GitRanger)
 
 ### From Source
 
@@ -134,8 +134,8 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 **Calvin A. Allen**
 
-[![Website](https://img.shields.io/badge/Website-codingwithcalvin.net-blue?style=flat&logo=google-chrome&logoColor=white)](https://codingwithcalvin.net)
-[![GitHub](https://img.shields.io/badge/GitHub-CodingWithCalvin-181717?style=flat&logo=github)](https://github.com/CodingWithCalvin)
+[![Website](https://img.shields.io/badge/Website-codingwithcalvin.net-blue?style=for-the-badge&logo=google-chrome&logoColor=white)](https://codingwithcalvin.net)
+[![GitHub](https://img.shields.io/badge/GitHub-CodingWithCalvin-181717?style=for-the-badge&logo=github)](https://github.com/CodingWithCalvin)
 
 ---
 
