@@ -39,6 +39,7 @@
         <Icon guid="ImageCatalogGuid" id="GitNoColor" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
           <ButtonText>Toggle Inline Blame</ButtonText>
         </Strings>
@@ -50,6 +51,7 @@
         <Icon guid="ImageCatalogGuid" id="GitNoColor" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
           <ButtonText>Toggle Blame Gutter</ButtonText>
         </Strings>
