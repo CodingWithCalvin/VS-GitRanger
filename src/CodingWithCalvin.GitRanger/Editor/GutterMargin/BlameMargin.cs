@@ -44,6 +44,7 @@ namespace CodingWithCalvin.GitRanger.Editor.GutterMargin
             var options = GeneralOptions.Instance;
             Width = options?.GutterWidth ?? 40;
             ClipToBounds = true;
+            Background = Brushes.Transparent; // Required for mouse events to work
 
             // Ensure services are initialized (in case package hasn't loaded yet)
             GitRangerPackage.EnsureServicesInitialized();
