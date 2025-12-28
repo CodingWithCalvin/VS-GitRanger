@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="VS-GitRanger" Version="1.0.0" Language="en-US" Publisher="Coding With Calvin" />
         <DisplayName>Git Ranger</DisplayName>
-        <Description xml:space="preserve">A visually exciting Git management extension for Visual Studio. Features include inline blame annotations, blame gutter margins, file history, commit details, and an interactive git graph - all with theme-adaptive vibrant colors.</Description>
+        <Description xml:space="preserve">A visually stunning Git management extension for Visual Studio 2022/2026, with theme-adaptive vibrant colors.</Description>
         <MoreInfo>https://github.com/calvinallen/GitRanger</MoreInfo>
         <License>Resources\LICENSE</License>
         <GettingStartedGuide>https://github.com/calvinallen/GitRanger#readme</GettingStartedGuide>
