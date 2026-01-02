@@ -10,6 +10,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+Generated/
 
 # Visual Studio files
 .vs/
