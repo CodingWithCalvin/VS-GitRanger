@@ -1,131 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="17.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="CodingWithCalvin.VsixSdk/0.3.0">
+
   <PropertyGroup>
-    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-  </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}</ProjectGuid>
-    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net48</TargetFramework>
     <RootNamespace>CodingWithCalvin.GitRanger</RootNamespace>
     <AssemblyName>CodingWithCalvin.GitRanger</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <GeneratePkgDefFile>true</GeneratePkgDefFile>
-    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
-    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
-    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
-    <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
-    <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
-    <UseCodebase>true</UseCodebase>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <DeployExtension Condition="'$(DeployExtension)' == ''">true</DeployExtension>
+    <OutputPath>bin/$(Configuration)/</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DeployExtension>True</DeployExtension>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
+    <PackageReference Include="Community.VisualStudio.Toolkit.17" Version="17.0.507" />
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.14.40265" ExcludeAssets="runtime" />
+    <PackageReference Include="LibGit2Sharp" Version="0.30.0" />
+    <PackageReference Include="SkiaSharp" Version="2.88.7" />
+    <PackageReference Include="SkiaSharp.Views.WPF" Version="2.88.7" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="GitRangerPackage.cs" />
-    <Compile Include="source.extension.cs" />
-    <Compile Include="Commands\BlameCommands.cs" />
-    <Compile Include="Services\GitService.cs" />
-    <Compile Include="Services\ThemeService.cs" />
-    <Compile Include="Services\BlameService.cs" />
-    <Compile Include="Options\GeneralOptionsPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Options\GeneralOptions.cs" />
-    <Compile Include="Editor\BlameAdornment\BlameAdornmentFactory.cs" />
-    <Compile Include="Editor\BlameAdornment\BlameAdornment.cs" />
-    <Compile Include="Editor\GutterMargin\BlameMarginFactory.cs" />
-    <Compile Include="Editor\GutterMargin\BlameMargin.cs" />
-    <Compile Include="Models\BlameLineInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <ProjectReference Include="..\CodingWithCalvin.GitRanger.Core\CodingWithCalvin.GitRanger.Core.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="source.extension.vsixmanifest">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <VSCTCompile Include="VSCommandTable.vsct">
-      <ResourceName>Menus.ctmenu</ResourceName>
-      <SubType>Designer</SubType>
-    </VSCTCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\..\resources\icon.png">
-      <Link>Resources\icon.png</Link>
+    <Content Include="..\..\resources\icon.png" Link="Resources\icon.png">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\LICENSE">
-      <Link>Resources\LICENSE</Link>
+    <Content Include="..\..\LICENSE" Link="Resources\LICENSE">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CodingWithCalvin.GitRanger.Core\CodingWithCalvin.GitRanger.Core.csproj">
-      <Project>{B2C3D4E5-F6A7-8901-BCDE-F12345678901}</Project>
-      <Name>CodingWithCalvin.GitRanger.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Community.VisualStudio.Toolkit.17">
-      <Version>17.0.507</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.SDK">
-      <Version>17.10.40171</Version>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VSSDK.BuildTools">
-      <Version>17.10.2179</Version>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="LibGit2Sharp">
-      <Version>0.30.0</Version>
-    </PackageReference>
-    <PackageReference Include="SkiaSharp">
-      <Version>2.88.7</Version>
-    </PackageReference>
-    <PackageReference Include="SkiaSharp.Views.WPF">
-      <Version>2.88.7</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="Exists('$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets')" />
 
   <!-- Include LibGit2Sharp native binaries in VSIX -->
   <Target Name="IncludeLibGit2SharpNativeBinaries" AfterTargets="ResolveReferences">
@@ -144,4 +51,5 @@
       </Content>
     </ItemGroup>
   </Target>
+
 </Project>
