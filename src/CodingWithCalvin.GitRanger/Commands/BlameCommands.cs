@@ -141,9 +141,7 @@ namespace CodingWithCalvin.GitRanger.Commands
                 if (string.IsNullOrEmpty(filePath))
                     return;
 
-                activity?.SetTag("file.path", filePath);
-
-                // Get the current line
+                                // Get the current line
                 var caretPosition = docView.TextView.Caret.Position.BufferPosition;
                 var lineNumber = docView.TextView.TextSnapshot.GetLineNumberFromPosition(caretPosition.Position) + 1;
 

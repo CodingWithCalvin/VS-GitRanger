@@ -40,9 +40,7 @@ namespace CodingWithCalvin.GitRanger.Services
         {
             using var activity = VsixTelemetry.StartCommandActivity("BlameService.GetBlame");
 
-            activity?.SetTag("file.path", filePath);
-
-            if (string.IsNullOrEmpty(filePath))
+                        if (string.IsNullOrEmpty(filePath))
                 return Array.Empty<BlameLineInfo>();
 
             // Check cache
@@ -84,9 +82,7 @@ namespace CodingWithCalvin.GitRanger.Services
         {
             using var activity = VsixTelemetry.StartCommandActivity("BlameService.LoadBlameInBackground");
 
-            activity?.SetTag("file.path", filePath);
-
-            if (string.IsNullOrEmpty(filePath))
+                        if (string.IsNullOrEmpty(filePath))
             {
                 VsixTelemetry.LogInformation("LoadBlameInBackground - FilePath is empty");
                 return;
@@ -96,9 +92,9 @@ namespace CodingWithCalvin.GitRanger.Services
             {
                 try
                 {
-                    VsixTelemetry.LogInformation("Loading blame for {FilePath}", filePath);
+                    VsixTelemetry.LogInformation("Loading blame for file");
                     var lines = GetBlame(filePath);
-                    VsixTelemetry.LogInformation("Loaded {LineCount} blame lines for {FilePath}", lines.Count, filePath);
+                    VsixTelemetry.LogInformation("Loaded {LineCount} blame lines", lines.Count);
                     BlameLoaded?.Invoke(this, new BlameLoadedEventArgs(filePath, lines));
                 }
                 catch (Exception ex)
@@ -106,8 +102,7 @@ namespace CodingWithCalvin.GitRanger.Services
                     VsixTelemetry.TrackException(ex, new Dictionary<string, object>
                     {
                         { "operation.name", "LoadBlameInBackground" },
-                        { "file.path", filePath }
-                    });
+                        });
                 }
             });
         }
