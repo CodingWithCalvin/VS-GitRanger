@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CodingWithCalvin.GitRanger.Commands;
 using CodingWithCalvin.GitRanger.Options;
 using CodingWithCalvin.GitRanger.Services;
+using CodingWithCalvin.Otel4Vsix;
 using Community.VisualStudio.Toolkit;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
@@ -85,16 +86,32 @@ namespace CodingWithCalvin.GitRanger
         {
             await base.InitializeAsync(cancellationToken, progress);
 
+            // Switch to the main thread for telemetry initialization
+            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+
+            // Initialize telemetry
+            var builder = VsixTelemetry.Configure()
+                .WithServiceName(VsixInfo.DisplayName)
+                .WithServiceVersion(VsixInfo.Version)
+                .WithVisualStudioAttributes(this)
+                .WithEnvironmentAttributes();
+
+#if !DEBUG
+            builder
+                .WithOtlpHttp("https://api.honeycomb.io")
+                .WithHeader("x-honeycomb-team", HoneycombConfig.ApiKey);
+#endif
+
+            builder.Initialize();
+
             // Initialize services
             await InitializeServicesAsync();
-
-            // Switch to the main thread for command registration
-            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
             // Register commands
             await RegisterCommandsAsync();
 
             // Log successful initialization
+            VsixTelemetry.LogInformation("Git Ranger initialized successfully");
             await VS.StatusBar.ShowMessageAsync("Git Ranger initialized successfully");
         }
 
@@ -132,6 +149,16 @@ namespace CodingWithCalvin.GitRanger
             // Register blame commands (toggle inline/gutter, copy SHA)
             await BlameCommands.InitializeAsync(this);
             // Note: HistoryCommands and GraphCommands are not registered yet (coming soon)
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                VsixTelemetry.Shutdown();
+            }
+
+            base.Dispose(disposing);
         }
     }
 

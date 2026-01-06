@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Threading.Tasks;
 using CodingWithCalvin.GitRanger.Options;
+using CodingWithCalvin.Otel4Vsix;
 using Community.VisualStudio.Toolkit;
 using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
@@ -60,6 +62,8 @@ namespace CodingWithCalvin.GitRanger.Commands
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
+            using var activity = VsixTelemetry.StartCommandActivity("GitRanger.ToggleInlineBlame");
+
             var options = GeneralOptions.Instance;
             if (options != null)
             {
@@ -67,6 +71,8 @@ namespace CodingWithCalvin.GitRanger.Commands
                 options.Save();
 
                 var status = options.EnableInlineBlame ? "enabled" : "disabled";
+                activity?.SetTag("inline_blame.enabled", options.EnableInlineBlame);
+                VsixTelemetry.LogInformation("Inline blame {Status}", status);
                 VS.StatusBar.ShowMessageAsync($"Git Ranger: Inline blame {status}").FireAndForget();
             }
         }
@@ -91,6 +97,8 @@ namespace CodingWithCalvin.GitRanger.Commands
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
+            using var activity = VsixTelemetry.StartCommandActivity("GitRanger.ToggleBlameGutter");
+
             var options = GeneralOptions.Instance;
             if (options != null)
             {
@@ -98,6 +106,8 @@ namespace CodingWithCalvin.GitRanger.Commands
                 options.Save();
 
                 var status = options.EnableBlameGutter ? "enabled" : "disabled";
+                activity?.SetTag("blame_gutter.enabled", options.EnableBlameGutter);
+                VsixTelemetry.LogInformation("Blame gutter {Status}", status);
                 VS.StatusBar.ShowMessageAsync($"Git Ranger: Blame gutter {status}").FireAndForget();
             }
         }
@@ -119,6 +129,8 @@ namespace CodingWithCalvin.GitRanger.Commands
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
+            using var activity = VsixTelemetry.StartCommandActivity("GitRanger.CopyCommitSha");
+
             try
             {
                 var docView = await VS.Documents.GetActiveDocumentViewAsync();
@@ -129,24 +141,36 @@ namespace CodingWithCalvin.GitRanger.Commands
                 if (string.IsNullOrEmpty(filePath))
                     return;
 
+                activity?.SetTag("file.path", filePath);
+
                 // Get the current line
                 var caretPosition = docView.TextView.Caret.Position.BufferPosition;
                 var lineNumber = docView.TextView.TextSnapshot.GetLineNumberFromPosition(caretPosition.Position) + 1;
+
+                activity?.SetTag("line.number", lineNumber);
 
                 // Get blame for this line
                 var blameInfo = GitRangerPackage.BlameService?.GetBlameForLine(filePath, lineNumber);
                 if (blameInfo != null)
                 {
                     System.Windows.Clipboard.SetText(blameInfo.CommitSha);
+                    activity?.SetTag("commit.sha", blameInfo.ShortSha);
+                    VsixTelemetry.LogInformation("Copied commit SHA {CommitSha} to clipboard", blameInfo.ShortSha);
                     await VS.StatusBar.ShowMessageAsync($"Git Ranger: Copied commit SHA {blameInfo.ShortSha} to clipboard");
                 }
                 else
                 {
+                    VsixTelemetry.LogInformation("No blame information available for line {LineNumber}", lineNumber);
                     await VS.StatusBar.ShowMessageAsync("Git Ranger: No blame information available for this line");
                 }
             }
             catch (Exception ex)
             {
+                activity?.RecordError(ex);
+                VsixTelemetry.TrackException(ex, new Dictionary<string, object>
+                {
+                    { "operation.name", "CopyCommitSha" }
+                });
                 await VS.StatusBar.ShowMessageAsync($"Git Ranger: Error copying commit SHA - {ex.Message}");
             }
         }
