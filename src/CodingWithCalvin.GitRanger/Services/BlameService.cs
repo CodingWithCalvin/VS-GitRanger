@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CodingWithCalvin.GitRanger.Core.Models;
+using CodingWithCalvin.Otel4Vsix;
 
 namespace CodingWithCalvin.GitRanger.Services
 {
@@ -38,20 +38,27 @@ namespace CodingWithCalvin.GitRanger.Services
         /// <returns>Blame line information, or empty if not available.</returns>
         public IReadOnlyList<BlameLineInfo> GetBlame(string filePath)
         {
-            if (string.IsNullOrEmpty(filePath))
+            using var activity = VsixTelemetry.StartCommandActivity("BlameService.GetBlame");
+
+                        if (string.IsNullOrEmpty(filePath))
                 return Array.Empty<BlameLineInfo>();
 
             // Check cache
             if (_cache.TryGetValue(filePath, out var cached) && !cached.IsExpired)
             {
+                activity?.SetTag("cache.hit", true);
                 return cached.Lines;
             }
+
+            activity?.SetTag("cache.hit", false);
 
             // Load synchronously
             var lines = _gitService.GetBlame(filePath).ToList();
 
             // Update cache
             _cache[filePath] = new BlameCache(lines);
+
+            activity?.SetTag("lines.count", lines.Count);
 
             return lines;
         }
@@ -73,11 +80,11 @@ namespace CodingWithCalvin.GitRanger.Services
         /// <param name="filePath">The file path.</param>
         public void LoadBlameInBackground(string filePath)
         {
-            Debug.WriteLine($"[GitRanger] BlameService.LoadBlameInBackground - FilePath: {filePath}");
+            using var activity = VsixTelemetry.StartCommandActivity("BlameService.LoadBlameInBackground");
 
-            if (string.IsNullOrEmpty(filePath))
+                        if (string.IsNullOrEmpty(filePath))
             {
-                Debug.WriteLine("[GitRanger] BlameService.LoadBlameInBackground - FilePath is empty");
+                VsixTelemetry.LogInformation("LoadBlameInBackground - FilePath is empty");
                 return;
             }
 
@@ -85,16 +92,17 @@ namespace CodingWithCalvin.GitRanger.Services
             {
                 try
                 {
-                    Debug.WriteLine($"[GitRanger] BlameService.LoadBlameInBackground - Starting GetBlame for {filePath}");
+                    VsixTelemetry.LogInformation("Loading blame for file");
                     var lines = GetBlame(filePath);
-                    Debug.WriteLine($"[GitRanger] BlameService.LoadBlameInBackground - Got {lines.Count} lines");
+                    VsixTelemetry.LogInformation("Loaded {LineCount} blame lines", lines.Count);
                     BlameLoaded?.Invoke(this, new BlameLoadedEventArgs(filePath, lines));
-                    Debug.WriteLine("[GitRanger] BlameService.LoadBlameInBackground - BlameLoaded event fired");
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"[GitRanger] BlameService.LoadBlameInBackground - ERROR: {ex.Message}");
-                    Debug.WriteLine($"[GitRanger] BlameService.LoadBlameInBackground - StackTrace: {ex.StackTrace}");
+                    VsixTelemetry.TrackException(ex, new Dictionary<string, object>
+                    {
+                        { "operation.name", "LoadBlameInBackground" },
+                        });
                 }
             });
         }
