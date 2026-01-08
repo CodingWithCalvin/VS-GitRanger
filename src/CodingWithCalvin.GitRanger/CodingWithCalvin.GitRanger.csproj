@@ -1,4 +1,4 @@
-<Project Sdk="CodingWithCalvin.VsixSdk/0.3.0">
+<Project Sdk="CodingWithCalvin.VsixSdk/0.4.0">
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
@@ -13,6 +13,7 @@
     <PackageReference Include="CodingWithCalvin.Otel4Vsix" Version="0.2.2" />
     <PackageReference Include="Community.VisualStudio.Toolkit.17" Version="17.0.507" />
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.14.40265" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.*" PrivateAssets="all" />
     <PackageReference Include="LibGit2Sharp" Version="0.30.0" />
     <PackageReference Include="SkiaSharp" Version="2.88.7" />
     <PackageReference Include="SkiaSharp.Views.WPF" Version="2.88.7" />
