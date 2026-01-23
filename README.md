@@ -36,6 +36,15 @@ A visual indicator in the editor margin showing commit history **at a glance**.
 - 📋 Click to copy commit SHA
 - 🔎 Hover for commit details
 
+### 📍 Status Bar Blame
+
+See blame info for the **current line** right in the Visual Studio status bar — updates instantly as you navigate!
+
+- ⚡ **Real-time updates** — blame follows your cursor
+- 🎛️ **Customizable format** — choose what to display with `{author}`, `{date}`, `{message}`, `{sha}` placeholders
+- 📅 **Relative or absolute dates** — "2 days ago" or "1/21/2026"
+- ✂️ **Auto-truncate** — configurable max length keeps your status bar tidy
+
 ### 🔮 What's Next?
 
 Check out our [issues list](https://github.com/CodingWithCalvin/VS-GitRanger/issues) to see what features are planned and vote on what you'd like to see next!
@@ -91,6 +100,23 @@ Configure Git Ranger via **Tools → Options → Git Ranger**
 | Compact Mode | Condensed display format | ❌ `false` |
 | Gutter Width | Width in pixels | `40` |
 | Show Age Bars | Visual age indicators | ✅ `true` |
+
+### 📍 Status Bar Settings
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| Enable Status Bar Blame | Show blame in status bar | ✅ `true` |
+| Format | Template with `{author}`, `{date}`, `{message}`, `{sha}` | `{author}, {date} • {message}` |
+| Use Relative Dates | Show "2 days ago" vs absolute date | ✅ `true` |
+| Max Length | Truncate long messages (0 = unlimited) | `100` |
+
+### 🔧 Diagnostics
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| Log Level | Output pane verbosity: `None`, `Error`, `Info`, `Verbose` | `Error` |
+
+*Logs are written to the "Git Ranger" output pane in Visual Studio.*
 
 ---
 
