@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using Community.VisualStudio.Toolkit;
@@ -11,7 +12,9 @@ namespace CodingWithCalvin.GitRanger.Services
     /// <summary>
     /// Service for Visual Studio theme detection and color adaptation.
     /// </summary>
-    public class ThemeService
+    [Export(typeof(IThemeService))]
+    [PartCreationPolicy(CreationPolicy.Shared)]
+    public class ThemeService : IThemeService
     {
         private static readonly Color[] VibrantAuthorColors = new[]
         {

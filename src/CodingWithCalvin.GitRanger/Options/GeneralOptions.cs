@@ -102,6 +102,38 @@ namespace CodingWithCalvin.GitRanger.Options
         [Description("Show age indicator bars in the gutter.")]
         [DefaultValue(true)]
         public bool ShowAgeBars { get; set; } = true;
+
+        // Status Bar
+        [Category("Status Bar")]
+        [DisplayName("Enable Status Bar Blame")]
+        [Description("Show blame information in the status bar for the current line.")]
+        [DefaultValue(false)]
+        public bool EnableStatusBarBlame { get; set; } = false;
+
+        [Category("Status Bar")]
+        [DisplayName("Format")]
+        [Description("Format template using placeholders: {author}, {date}, {message}, {sha}")]
+        [DefaultValue("{author}, {date} \u2022 {message}")]
+        public string StatusBarFormat { get; set; } = "{author}, {date} \u2022 {message}";
+
+        [Category("Status Bar")]
+        [DisplayName("Use Relative Dates")]
+        [Description("Show relative dates (e.g., '2 days ago') instead of absolute dates.")]
+        [DefaultValue(true)]
+        public bool StatusBarRelativeDate { get; set; } = true;
+
+        [Category("Status Bar")]
+        [DisplayName("Maximum Length")]
+        [Description("Maximum characters to display before truncating. Set to 0 for no limit.")]
+        [DefaultValue(100)]
+        public int StatusBarMaxLength { get; set; } = 100;
+
+        // Diagnostics
+        [Category("Diagnostics")]
+        [DisplayName("Log Level")]
+        [Description("Controls output pane verbosity. None=disabled, Error=failures only, Info=key events, Verbose=detailed tracing.")]
+        [DefaultValue(LogLevel.Error)]
+        public LogLevel LogLevel { get; set; } = LogLevel.Error;
     }
 
     /// <summary>
@@ -123,5 +155,31 @@ namespace CodingWithCalvin.GitRanger.Options
         /// Color by commit age (heat map).
         /// </summary>
         Age
+    }
+
+    /// <summary>
+    /// Log level for output pane messages.
+    /// </summary>
+    public enum LogLevel
+    {
+        /// <summary>
+        /// No logging.
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// Only errors and failures.
+        /// </summary>
+        Error,
+
+        /// <summary>
+        /// Key lifecycle events and errors.
+        /// </summary>
+        Info,
+
+        /// <summary>
+        /// Detailed tracing for debugging.
+        /// </summary>
+        Verbose
     }
 }

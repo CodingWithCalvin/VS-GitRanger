@@ -145,6 +145,42 @@ namespace CodingWithCalvin.GitRanger.Options
             set => _options.ShowAgeBars = value;
         }
 
+        // Status Bar Settings
+        [Category("Status Bar")]
+        [DisplayName("Enable Status Bar Blame")]
+        [Description("Show blame information in the status bar for the current line.")]
+        public bool EnableStatusBarBlame
+        {
+            get => _options.EnableStatusBarBlame;
+            set => _options.EnableStatusBarBlame = value;
+        }
+
+        [Category("Status Bar")]
+        [DisplayName("Format")]
+        [Description("Format template using placeholders: {author}, {date}, {message}, {sha}")]
+        public string StatusBarFormat
+        {
+            get => _options.StatusBarFormat;
+            set => _options.StatusBarFormat = value;
+        }
+
+        [Category("Status Bar")]
+        [DisplayName("Use Relative Dates")]
+        [Description("Show relative dates (e.g., '2 days ago') instead of absolute dates.")]
+        public bool StatusBarRelativeDate
+        {
+            get => _options.StatusBarRelativeDate;
+            set => _options.StatusBarRelativeDate = value;
+        }
+
+        [Category("Status Bar")]
+        [DisplayName("Maximum Length")]
+        [Description("Maximum characters to display before truncating. Set to 0 for no limit.")]
+        public int StatusBarMaxLength
+        {
+            get => _options.StatusBarMaxLength;
+            set => _options.StatusBarMaxLength = Math.Max(0, value);
+        }
 
         /// <summary>
         /// Saves the settings.
