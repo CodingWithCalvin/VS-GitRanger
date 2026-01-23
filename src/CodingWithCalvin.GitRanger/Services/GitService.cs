@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -11,10 +12,31 @@ namespace CodingWithCalvin.GitRanger.Services
     /// <summary>
     /// Service for Git repository operations.
     /// </summary>
-    public class GitService
+    [Export(typeof(IGitService))]
+    [PartCreationPolicy(CreationPolicy.Shared)]
+    public class GitService : IGitService
     {
+        private readonly IOutputPaneService _outputPane;
         private Repository? _currentRepository;
         private string? _currentRepositoryPath;
+
+        [ImportingConstructor]
+        public GitService(IOutputPaneService outputPane)
+        {
+            _outputPane = outputPane ?? throw new ArgumentNullException(nameof(outputPane));
+
+            // Disable owner validation to avoid "not owned by current user" errors
+            // This is safe for a VS extension since the user explicitly opened these files
+            try
+            {
+                GlobalSettings.SetOwnerValidation(false);
+                _outputPane.WriteInfo("GitService created (owner validation disabled)");
+            }
+            catch (Exception ex)
+            {
+                _outputPane.WriteError("GitService: could not disable owner validation: {0}", ex.Message);
+            }
+        }
 
         /// <summary>
         /// Gets the current repository path, if available.
@@ -38,27 +60,52 @@ namespace CodingWithCalvin.GitRanger.Services
         /// <returns>True if a repository was found, false otherwise.</returns>
         public bool TryOpenRepository(string filePath)
         {
-            if (string.IsNullOrEmpty(filePath))
-                return false;
+            _outputPane.WriteVerbose("GitService.TryOpenRepository: {0}", filePath);
 
+            if (string.IsNullOrEmpty(filePath))
+            {
+                _outputPane.WriteVerbose("  - FilePath is empty");
+                return false;
+            }
+
+            string? repoPath = null;
             try
             {
-                var repoPath = Repository.Discover(filePath);
+                repoPath = Repository.Discover(filePath);
                 if (string.IsNullOrEmpty(repoPath))
+                {
+                    _outputPane.WriteVerbose("  - No repository found");
                     return false;
+                }
 
                 // Only reopen if it's a different repository
                 if (_currentRepositoryPath != repoPath)
                 {
+                    _outputPane.WriteInfo("Opening repository: {0}", repoPath);
                     _currentRepository?.Dispose();
                     _currentRepository = new Repository(repoPath);
                     _currentRepositoryPath = repoPath;
                 }
+                else
+                {
+                    _outputPane.WriteVerbose("  - Using existing repository");
+                }
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _outputPane.WriteError("GitService.TryOpenRepository failed: {0}", ex.Message);
+
+                // Provide helpful message for common Git safe.directory issue
+                if (ex.Message.Contains("not owned by current user"))
+                {
+                    var safePath = repoPath?.TrimEnd('/', '\\') ?? Path.GetDirectoryName(filePath) ?? filePath;
+                    _outputPane.WriteError("*** Git Safe Directory Issue ***");
+                    _outputPane.WriteError("To fix, run: git config --global --add safe.directory \"{0}\"", safePath);
+                    _outputPane.WriteError("Or to trust all: git config --global --add safe.directory '*'");
+                }
+
                 return false;
             }
         }
@@ -70,12 +117,11 @@ namespace CodingWithCalvin.GitRanger.Services
         /// <returns>A collection of blame line information.</returns>
         public IReadOnlyList<BlameLineInfo> GetBlame(string filePath)
         {
-            Debug.WriteLine($"[GitRanger] GitService.GetBlame - FilePath: {filePath}");
-            Debug.WriteLine($"[GitRanger] GitService.GetBlame - CurrentRepository: {(_currentRepository == null ? "NULL" : "OK")}");
+            _outputPane.WriteVerbose("GitService.GetBlame: {0}", filePath);
 
             if (_currentRepository == null || string.IsNullOrEmpty(filePath))
             {
-                Debug.WriteLine("[GitRanger] GitService.GetBlame - Repository null or filepath empty, returning empty");
+                _outputPane.WriteVerbose("  - Repository null or filepath empty");
                 return Array.Empty<BlameLineInfo>();
             }
 
@@ -85,16 +131,14 @@ namespace CodingWithCalvin.GitRanger.Services
                 var repoRoot = _currentRepository.Info.WorkingDirectory;
                 var relativePath = GetRelativePath(repoRoot, filePath);
 
-                Debug.WriteLine($"[GitRanger] GitService.GetBlame - RepoRoot: {repoRoot}");
-                Debug.WriteLine($"[GitRanger] GitService.GetBlame - RelativePath: {relativePath}");
+                _outputPane.WriteVerbose("  - RelativePath: {0}", relativePath);
 
                 if (string.IsNullOrEmpty(relativePath))
                 {
-                    Debug.WriteLine("[GitRanger] GitService.GetBlame - RelativePath is empty, returning empty");
+                    _outputPane.WriteVerbose("  - RelativePath is empty");
                     return Array.Empty<BlameLineInfo>();
                 }
 
-                Debug.WriteLine($"[GitRanger] GitService.GetBlame - Calling Repository.Blame for {relativePath}");
                 var blameHunks = _currentRepository.Blame(relativePath);
                 var results = new List<BlameLineInfo>();
                 var lineNumber = 1;
@@ -117,14 +161,12 @@ namespace CodingWithCalvin.GitRanger.Services
                     }
                 }
 
-                Debug.WriteLine($"[GitRanger] GitService.GetBlame - Success! Got {results.Count} blame lines");
+                _outputPane.WriteVerbose("  - Got {0} blame lines", results.Count);
                 return results;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[GitRanger] GitService.GetBlame - ERROR: {ex.Message}");
-                Debug.WriteLine($"[GitRanger] GitService.GetBlame - StackTrace: {ex.StackTrace}");
-                // Return empty on error (file not tracked, etc.)
+                _outputPane.WriteError("GitService.GetBlame failed: {0}", ex.Message);
                 return Array.Empty<BlameLineInfo>();
             }
         }

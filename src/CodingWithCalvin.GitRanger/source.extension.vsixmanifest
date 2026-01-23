@@ -4,10 +4,10 @@
         <Identity Id="VS-GitRanger" Version="1.0.0" Language="en-US" Publisher="Coding With Calvin" />
         <DisplayName>Git Ranger</DisplayName>
         <Description xml:space="preserve">A visually stunning Git management extension for Visual Studio 2022/2026, with theme-adaptive vibrant colors.</Description>
-        <MoreInfo>https://github.com/calvinallen/GitRanger</MoreInfo>
+        <MoreInfo>https://github.com/CodingWithCalvin/VS-GitRanger/</MoreInfo>
         <License>Resources\LICENSE</License>
-        <GettingStartedGuide>https://github.com/calvinallen/GitRanger#readme</GettingStartedGuide>
-        <ReleaseNotes>https://github.com/calvinallen/GitRanger/releases</ReleaseNotes>
+        <GettingStartedGuide>https://github.com/CodingWithCalvin/VS-GitRanger/#readme</GettingStartedGuide>
+        <ReleaseNotes>https://github.com/CodingWithCalvin/VS-GitRanger/releases</ReleaseNotes>
         <Icon>Resources\icon.png</Icon>
         <PreviewImage>Resources\icon.png</PreviewImage>
         <Tags>git, blame, history, graph, version control</Tags>

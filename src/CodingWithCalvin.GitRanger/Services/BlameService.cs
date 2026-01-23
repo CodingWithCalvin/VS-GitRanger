@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,10 +13,13 @@ namespace CodingWithCalvin.GitRanger.Services
     /// <summary>
     /// Service for managing blame data with caching and background loading.
     /// </summary>
-    public class BlameService
+    [Export(typeof(IBlameService))]
+    [PartCreationPolicy(CreationPolicy.Shared)]
+    public class BlameService : IBlameService
     {
-        private readonly GitService _gitService;
-        private readonly ThemeService _themeService;
+        private readonly IGitService _gitService;
+        private readonly IThemeService _themeService;
+        private readonly IOutputPaneService _outputPane;
         private readonly ConcurrentDictionary<string, BlameCache> _cache = new ConcurrentDictionary<string, BlameCache>(StringComparer.OrdinalIgnoreCase);
 
         private static readonly TimeSpan CacheExpiry = TimeSpan.FromMinutes(5);
@@ -25,10 +29,14 @@ namespace CodingWithCalvin.GitRanger.Services
         /// </summary>
         public event EventHandler<BlameLoadedEventArgs>? BlameLoaded;
 
-        public BlameService(GitService gitService, ThemeService themeService)
+        [ImportingConstructor]
+        public BlameService(IGitService gitService, IThemeService themeService, IOutputPaneService outputPane)
         {
             _gitService = gitService ?? throw new ArgumentNullException(nameof(gitService));
             _themeService = themeService ?? throw new ArgumentNullException(nameof(themeService));
+            _outputPane = outputPane ?? throw new ArgumentNullException(nameof(outputPane));
+
+            _outputPane.WriteInfo("BlameService created");
         }
 
         /// <summary>
@@ -80,10 +88,13 @@ namespace CodingWithCalvin.GitRanger.Services
         /// <param name="filePath">The file path.</param>
         public void LoadBlameInBackground(string filePath)
         {
+            _outputPane.WriteVerbose("BlameService.LoadBlameInBackground: {0}", filePath);
+
             using var activity = VsixTelemetry.StartCommandActivity("BlameService.LoadBlameInBackground");
 
                         if (string.IsNullOrEmpty(filePath))
             {
+                _outputPane.WriteVerbose("  - FilePath is empty");
                 VsixTelemetry.LogInformation("LoadBlameInBackground - FilePath is empty");
                 return;
             }
@@ -94,11 +105,13 @@ namespace CodingWithCalvin.GitRanger.Services
                 {
                     VsixTelemetry.LogInformation("Loading blame for file");
                     var lines = GetBlame(filePath);
+                    _outputPane.WriteVerbose("  - Loaded {0} lines", lines.Count);
                     VsixTelemetry.LogInformation("Loaded {LineCount} blame lines", lines.Count);
                     BlameLoaded?.Invoke(this, new BlameLoadedEventArgs(filePath, lines));
                 }
                 catch (Exception ex)
                 {
+                    _outputPane.WriteError("BlameService.LoadBlameInBackground failed: {0}", ex.Message);
                     VsixTelemetry.TrackException(ex, new Dictionary<string, object>
                     {
                         { "operation.name", "LoadBlameInBackground" },
