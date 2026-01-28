@@ -27,6 +27,8 @@ See who changed each line **directly in the editor** — author name, commit dat
 - 👁️ **Configurable opacity** and display format
 - 💬 **Hover for full commit details**
 
+![Inline Blame](https://raw.githubusercontent.com/CodingWithCalvin/VS-GitRanger/main/resources/blame-inline.png)
+
 ### 📊 Blame Gutter Margin
 
 A visual indicator in the editor margin showing commit history **at a glance**.
@@ -36,6 +38,8 @@ A visual indicator in the editor margin showing commit history **at a glance**.
 - 📋 Click to copy commit SHA
 - 🔎 Hover for commit details
 
+![Blame Gutter](https://raw.githubusercontent.com/CodingWithCalvin/VS-GitRanger/main/resources/blame-gutter.png)
+
 ### 📍 Status Bar Blame
 
 See blame info for the **current line** right in the Visual Studio status bar — updates instantly as you navigate!
@@ -44,6 +48,8 @@ See blame info for the **current line** right in the Visual Studio status bar �
 - 🎛️ **Customizable format** — choose what to display with `{author}`, `{date}`, `{message}`, `{sha}` placeholders
 - 📅 **Relative or absolute dates** — "2 days ago" or "1/21/2026"
 - ✂️ **Auto-truncate** — configurable max length keeps your status bar tidy
+
+![Status Bar Blame](https://raw.githubusercontent.com/CodingWithCalvin/VS-GitRanger/main/resources/blame-status-bar.png)
 
 ### 🔮 What's Next?
 
