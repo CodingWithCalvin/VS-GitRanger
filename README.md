@@ -34,46 +34,46 @@
 
 ---
 
-## Features
+## ✨ Features
 
-### Inline Blame Annotations
+### 🔍 Inline Blame Annotations
 
 See who changed each line **directly in the editor** - author name, commit date, and message displayed right at the end of each line!
 
-- **Color-coded by author** - each contributor gets a unique vibrant color
-- **Heat map mode** - green = recent, red = old (optional)
-- **Configurable opacity** and display format
-- **Hover for full commit details**
+- 🎨 **Color-coded by author** - each contributor gets a unique vibrant color
+- 🔥 **Heat map mode** - green = recent, red = old (optional)
+- 👁️ **Configurable opacity** and display format
+- 💬 **Hover for full commit details**
 
 ![Inline Blame](https://raw.githubusercontent.com/CodingWithCalvin/VS-GitRanger/main/resources/blame-inline.png)
 
-### Blame Gutter Margin
+### 📊 Blame Gutter Margin
 
 A visual indicator in the editor margin showing commit history **at a glance**.
 
-- Age bars showing relative commit age
-- Author color indicators
-- Click to copy commit SHA
-- Hover for commit details
+- 📈 Age bars showing relative commit age
+- 🎯 Author color indicators
+- 📋 Click to copy commit SHA
+- 🔎 Hover for commit details
 
 ![Blame Gutter](https://raw.githubusercontent.com/CodingWithCalvin/VS-GitRanger/main/resources/blame-gutter.png)
 
-### Status Bar Blame
+### 📍 Status Bar Blame
 
 See blame info for the **current line** right in the Visual Studio status bar - updates instantly as you navigate!
 
-- **Real-time updates** - blame follows your cursor
-- **Customizable format** - choose what to display with `{author}`, `{date}`, `{message}`, `{sha}` placeholders
-- **Relative or absolute dates** - "2 days ago" or "1/21/2026"
-- **Auto-truncate** - configurable max length keeps your status bar tidy
+- ⚡ **Real-time updates** - blame follows your cursor
+- 🎛️ **Customizable format** - choose what to display with `{author}`, `{date}`, `{message}`, `{sha}` placeholders
+- 📅 **Relative or absolute dates** - "2 days ago" or "1/21/2026"
+- ✂️ **Auto-truncate** - configurable max length keeps your status bar tidy
 
 ![Status Bar Blame](https://raw.githubusercontent.com/CodingWithCalvin/VS-GitRanger/main/resources/blame-status-bar.png)
 
-### What's Next?
+### 🔮 What's Next?
 
 Check out our [issues list](https://github.com/CodingWithCalvin/VS-GitRanger/issues) to see what features are planned and vote on what you'd like to see next!
 
-## Installation
+## 🛠️ Installation
 
 ### Visual Studio Marketplace
 
@@ -86,11 +86,11 @@ Check out our [issues list](https://github.com/CodingWithCalvin/VS-GitRanger/iss
 
 Download the latest `.vsix` from the [Releases](https://github.com/CodingWithCalvin/VS-GitRanger/releases) page and double-click to install.
 
-## Configuration
+## ⚙️ Configuration
 
 Configure Git Ranger via **Tools > Options > Git Ranger**
 
-### Blame Settings
+### 🏷️ Blame Settings
 
 | Setting | Description | Default |
 |---------|-------------|---------|
@@ -101,14 +101,14 @@ Configure Git Ranger via **Tools > Options > Git Ranger**
 | Show Commit Message | Display message in inline blame | `true` |
 | Date Format | `relative` or custom format string | `relative` |
 
-### Color Settings
+### 🎨 Color Settings
 
 | Setting | Description | Default |
 |---------|-------------|---------|
 | Color Mode | `Author`, `Age`, or `None` | `Author` |
 | Max Age (days) | Maximum age for heat map | `365` |
 
-### Display Settings
+### 🖥️ Display Settings
 
 | Setting | Description | Default |
 |---------|-------------|---------|
@@ -117,7 +117,7 @@ Configure Git Ranger via **Tools > Options > Git Ranger**
 | Gutter Width | Width in pixels | `40` |
 | Show Age Bars | Visual age indicators | `true` |
 
-### Status Bar Settings
+### 📍 Status Bar Settings
 
 | Setting | Description | Default |
 |---------|-------------|---------|
@@ -126,7 +126,7 @@ Configure Git Ranger via **Tools > Options > Git Ranger**
 | Use Relative Dates | Show "2 days ago" vs absolute date | `true` |
 | Max Length | Truncate long messages (0 = unlimited) | `100` |
 
-### Diagnostics
+### 🔧 Diagnostics
 
 | Setting | Description | Default |
 |---------|-------------|---------|
@@ -134,12 +134,12 @@ Configure Git Ranger via **Tools > Options > Git Ranger**
 
 *Logs are written to the "Git Ranger" output pane in Visual Studio.*
 
-## Requirements
+## 📋 Requirements
 
-- Visual Studio 2022 (17.0) or later
-- .NET Framework 4.8
+- 💻 Visual Studio 2022 (17.0) or later
+- 🔧 .NET Framework 4.8
 
-## Technology Stack
+## 🏗️ Technology Stack
 
 | Component | Technology |
 |-----------|------------|
@@ -148,24 +148,24 @@ Configure Git Ranger via **Tools > Options > Git Ranger**
 | Graph Rendering | SkiaSharp *(planned)* |
 | VS Integration | Community.VisualStudio.Toolkit |
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Whether it's bug reports, feature requests, or pull requests - all feedback helps make this extension better.
 
-### Development Setup
+### 🔧 Development Setup
 
 1. Clone the repository
 2. Open the solution in Visual Studio 2022 or 2026
 3. Ensure you have the "Visual Studio extension development" workload installed
 4. Press F5 to launch the experimental instance
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## Contributors
+## 👥 Contributors
 
 <!-- readme: contributors -start -->
 <!-- readme: contributors -end -->
