@@ -85,10 +85,10 @@ namespace CodingWithCalvin.GitRanger.Options
         public bool CompactMode { get; set; } = false;
 
         [Category("Display")]
-        [DisplayName("Show On Hover Only")]
-        [Description("Only show detailed blame information on mouse hover.")]
-        [DefaultValue(false)]
-        public bool ShowOnHoverOnly { get; set; } = false;
+        [DisplayName("Inline Blame Display Mode")]
+        [Description("Controls when inline blame is shown: Always (all lines), CurrentLine (caret line only), or Hover (mouse hover only).")]
+        [DefaultValue(InlineBlameMode.Always)]
+        public InlineBlameMode InlineBlameDisplayMode { get; set; } = InlineBlameMode.Always;
 
         // Gutter Settings
         [Category("Gutter")]
@@ -134,6 +134,27 @@ namespace CodingWithCalvin.GitRanger.Options
         [Description("Controls output pane verbosity. None=disabled, Error=failures only, Info=key events, Verbose=detailed tracing.")]
         [DefaultValue(LogLevel.Error)]
         public LogLevel LogLevel { get; set; } = LogLevel.Error;
+    }
+
+    /// <summary>
+    /// Controls when inline blame annotations are displayed.
+    /// </summary>
+    public enum InlineBlameMode
+    {
+        /// <summary>
+        /// Show inline blame on all visible lines.
+        /// </summary>
+        Always,
+
+        /// <summary>
+        /// Show inline blame only on the current caret line.
+        /// </summary>
+        CurrentLine,
+
+        /// <summary>
+        /// Show inline blame only when the mouse hovers over a line.
+        /// </summary>
+        Hover
     }
 
     /// <summary>
