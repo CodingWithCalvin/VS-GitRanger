@@ -126,6 +126,15 @@ namespace CodingWithCalvin.GitRanger.Options
             set => _options.CompactMode = value;
         }
 
+        [Category("Display")]
+        [DisplayName("Inline Blame Display Mode")]
+        [Description("Controls when inline blame is shown: Always (all lines), CurrentLine (caret line only), or Hover (mouse hover only).")]
+        public InlineBlameMode InlineBlameDisplayMode
+        {
+            get => _options.InlineBlameDisplayMode;
+            set => _options.InlineBlameDisplayMode = value;
+        }
+
         // Gutter Settings
         [Category("Gutter")]
         [DisplayName("Gutter Width")]

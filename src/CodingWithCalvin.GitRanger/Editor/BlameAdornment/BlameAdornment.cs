@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using CodingWithCalvin.GitRanger.Core.Models;
 using CodingWithCalvin.GitRanger.Options;
@@ -35,6 +36,7 @@ internal sealed class BlameAdornment
     private IReadOnlyList<BlameLineInfo> _blameData = Array.Empty<BlameLineInfo>();
     private string? _currentFilePath;
     private bool _isLoading;
+    private int _activeLineNumber = -1;
 
     /// <summary>
     /// Creates a new blame adornment for the given text view.
@@ -60,6 +62,9 @@ internal sealed class BlameAdornment
         // Subscribe to events
         _view.LayoutChanged += OnLayoutChanged;
         _view.Closed += OnViewClosed;
+        _view.Caret.PositionChanged += OnCaretPositionChanged;
+        _view.VisualElement.MouseMove += OnMouseMove;
+        _view.VisualElement.MouseLeave += OnMouseLeave;
         _blameService.BlameLoaded += OnBlameLoaded;
         GeneralOptions.Saved += OnOptionsSaved;
 
@@ -71,8 +76,61 @@ internal sealed class BlameAdornment
     {
         _view.LayoutChanged -= OnLayoutChanged;
         _view.Closed -= OnViewClosed;
+        _view.Caret.PositionChanged -= OnCaretPositionChanged;
+        _view.VisualElement.MouseMove -= OnMouseMove;
+        _view.VisualElement.MouseLeave -= OnMouseLeave;
         _blameService.BlameLoaded -= OnBlameLoaded;
         GeneralOptions.Saved -= OnOptionsSaved;
+    }
+
+    private void OnCaretPositionChanged(object sender, CaretPositionChangedEventArgs e)
+    {
+        var options = GeneralOptions.Instance;
+        if (options == null || !options.EnableInlineBlame || options.InlineBlameDisplayMode != InlineBlameMode.CurrentLine)
+            return;
+
+        var caretLineNumber = _view.TextSnapshot.GetLineNumberFromPosition(
+            _view.Caret.Position.BufferPosition.Position) + 1;
+
+        if (caretLineNumber == _activeLineNumber)
+            return;
+
+        _activeLineNumber = caretLineNumber;
+        ClearAdornments();
+        UpdateAdornments();
+    }
+
+    private void OnMouseMove(object sender, MouseEventArgs e)
+    {
+        var options = GeneralOptions.Instance;
+        if (options == null || !options.EnableInlineBlame || options.InlineBlameDisplayMode != InlineBlameMode.Hover)
+            return;
+
+        var position = e.GetPosition(_view.VisualElement);
+        var viewportPoint = new Point(position.X + _view.ViewportLeft, position.Y + _view.ViewportTop);
+
+        var hoveredLine = _view.TextViewLines.GetTextViewLineContainingYCoordinate(viewportPoint.Y);
+        if (hoveredLine == null)
+            return;
+
+        var lineNumber = _view.TextSnapshot.GetLineNumberFromPosition(hoveredLine.Start.Position) + 1;
+
+        if (lineNumber == _activeLineNumber)
+            return;
+
+        _activeLineNumber = lineNumber;
+        ClearAdornments();
+        UpdateAdornments();
+    }
+
+    private void OnMouseLeave(object sender, MouseEventArgs e)
+    {
+        var options = GeneralOptions.Instance;
+        if (options == null || !options.EnableInlineBlame || options.InlineBlameDisplayMode != InlineBlameMode.Hover)
+            return;
+
+        _activeLineNumber = -1;
+        ClearAdornments();
     }
 
     private void OnOptionsSaved(GeneralOptions options)
@@ -173,6 +231,12 @@ internal sealed class BlameAdornment
         if (_isLoading || _blameData.Count == 0)
             return;
 
+        if (options.InlineBlameDisplayMode == InlineBlameMode.CurrentLine)
+        {
+            _activeLineNumber = _view.TextSnapshot.GetLineNumberFromPosition(
+                _view.Caret.Position.BufferPosition.Position) + 1;
+        }
+
         var viewportTop = _view.ViewportTop;
         var viewportBottom = _view.ViewportBottom;
 
@@ -182,6 +246,10 @@ internal sealed class BlameAdornment
                 continue;
 
             var lineNumber = _view.TextSnapshot.GetLineNumberFromPosition(line.Start.Position) + 1;
+
+            if (options.InlineBlameDisplayMode != InlineBlameMode.Always && lineNumber != _activeLineNumber)
+                continue;
+
             var blameInfo = _blameData.FirstOrDefault(b => b.LineNumber == lineNumber);
             if (blameInfo == null)
                 continue;
